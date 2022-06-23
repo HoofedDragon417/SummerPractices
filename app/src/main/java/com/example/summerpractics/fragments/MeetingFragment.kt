@@ -38,6 +38,7 @@ class MeetingFragment : Fragment() {
 
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
 

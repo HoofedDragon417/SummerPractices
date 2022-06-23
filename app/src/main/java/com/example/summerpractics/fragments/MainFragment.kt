@@ -29,15 +29,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val fragments = arrayListOf(
-
-            MeetingFragment(),
-            TaskFragment()
-
-        )
-
-        val adapter = ViewPagerAdapter(fragments, requireActivity())
-        binding.pager.adapter = adapter
+       create()
 
         binding.createTaskFab.setOnClickListener {
 
@@ -54,6 +46,27 @@ class MainFragment : Fragment() {
                 .addToBackStack(null).commit()
 
         }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        create()
+
+    }
+
+    fun create(){
+
+        val fragments = arrayListOf(
+
+            MeetingFragment(),
+            TaskFragment()
+
+        )
+
+        val adapter = ViewPagerAdapter(fragments, requireActivity())
+        binding.pager.adapter = adapter
 
     }
 
