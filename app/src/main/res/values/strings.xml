@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">SummerPractices</string>
+    <string name="meeting_fragment">Meetings</string>
+    <string name="task_fragment">Tasks</string>
+    <string name="save_button">Save</string>
+
+    <string name="date_format">dd/MM/yyyy</string>
+    <string name="time_format">HH:mm</string>
+
+    <string name="create_task">Create task</string>
+    <string name="task_title_hint">Task title</string>
+    <string name="task_note_hint">Task note</string>
+    <string name="task_priority">Task priority</string>
+    <string name="task_duration">Task duration</string>
+
+    <string name="create_meeting">Create meeting</string>
+    <string name="meeting_title_hint">Meeting title</string>
+    <string name="meeting_note_hint">Meeting note</string>
+    <string name="meeting_data_begin">Meeting begin</string>
+    <string name="meeting_data_end">Meeting end</string>
+    <string name="completed">Completed?</string>
+
+    <string name="tool_hint_title">Title</string>
+    <string name="tool_hint_note">Note</string>
+    <string name="tool_hint_duration">%.1f h.</string>
+    <string name="tool_hint_priority">8</string>
+    <string name="tool_hint_beginTime">10:00</string>
+    <string name="tool_hint_endTime">11:00</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

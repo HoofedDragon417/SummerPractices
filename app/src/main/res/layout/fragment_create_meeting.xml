@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.CreateMeetingFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_meeting"
+            android:textColor="@color/white"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/meeting_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:text="@string/save_button" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/meeting_title_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/meeting_title_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/start_meeting_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/meeting_data_begin"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/meeting_title_edittext" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/end_meeting_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/meeting_data_end"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/start_meeting_textview" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/meeting_set_date_textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/start_meeting_textview"
+            app:layout_constraintTop_toBottomOf="@id/meeting_title_edittext"
+            tools:hint="@string/date_format" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/meeting_set_date_textview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/meeting_set_date_textview1"
+            app:layout_constraintTop_toBottomOf="@id/start_meeting_textview"
+            tools:hint="@string/date_format" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/meeting_set_time_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/meeting_set_date_textview1"
+            app:layout_constraintTop_toTopOf="@id/meeting_set_date_textview1"
+            tools:hint="@string/time_format" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/meeting_set_time_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/meeting_set_time_begin"
+            app:layout_constraintStart_toStartOf="@id/meeting_set_time_begin"
+            app:layout_constraintTop_toBottomOf="@id/meeting_set_time_begin"
+            tools:hint="@string/time_format" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/meeting_note_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|start"
+            android:hint="@string/meeting_note_hint"
+            android:inputType="textMultiLine"
+            android:minLines="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/meeting_set_time_end" />
+
+        <!--Вставить элементы выбора времени-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
