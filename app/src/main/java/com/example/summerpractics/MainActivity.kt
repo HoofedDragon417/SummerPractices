@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
         supportActionBar?.hide()
 
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         if (testList.size != 0) {
 
-            if (startWeek > testList[0].endWeek) {
+            if (startWeek != testList[0].startWeek) {
 
                 val date = WeekDateSaveModel(testList[0].id, startWeek, endWeek)
 

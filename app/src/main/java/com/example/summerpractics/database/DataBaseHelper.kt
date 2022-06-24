@@ -35,27 +35,27 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
     }
 
-    private val CREATE_TABLE_DATES = "create table ${TABLE_NAME_DATES}(" +
-            "${KEY_ID} integer primary key autoincrement," +
-            "${KEY_MONDAY} real," +
-            "${KEY_SUNDAY} real" +
+    private val CREATE_TABLE_DATES = "create table $TABLE_NAME_DATES(" +
+            "$KEY_ID integer primary key autoincrement," +
+            "$KEY_MONDAY real," +
+            "$KEY_SUNDAY real" +
             ")"
 
-    private val CREATE_TABLE_TASKS = "create table ${TABLE_NAME_TASKS}(" +
-            "${KEY_ID} integer primary key autoincrement," +
-            "${KEY_TITLE} text," +
-            "${KEY_NOTE} text," +
-            "${KEY_DURATION} real," +
-            "${KEY_PRIORITY} integer," +
-            "${KEY_COMPLETED} integer" +
+    private val CREATE_TABLE_TASKS = "create table $TABLE_NAME_TASKS(" +
+            "$KEY_ID integer primary key autoincrement," +
+            "$KEY_TITLE text," +
+            "$KEY_NOTE text," +
+            "$KEY_DURATION real," +
+            "$KEY_PRIORITY integer," +
+            "$KEY_COMPLETED integer" +
             ")"
 
-    private val CREATE_TABLE_MEETING = "create table ${TABLE_NAME_MEETINGS}(" +
-            "${KEY_ID} integer primary key autoincrement," +
-            "${KEY_TITLE} text," +
-            "${KEY_NOTE} text," +
-            "${KEY_TIME_BEGIN} real," +
-            "${KEY_TIME_END} real" +
+    private val CREATE_TABLE_MEETING = "create table $TABLE_NAME_MEETINGS(" +
+            "$KEY_ID integer primary key autoincrement," +
+            "$KEY_TITLE text," +
+            "$KEY_NOTE text," +
+            "$KEY_TIME_BEGIN real," +
+            "$KEY_TIME_END real" +
             ")"
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -94,8 +94,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
         val db = this.readableDatabase
         val selectQuery =
-            "select * from ${TABLE_NAME_MEETINGS} " +
-                    "where ${KEY_TIME_BEGIN} between ${listOfDates[0].startWeek} and " +
+            "select * from $TABLE_NAME_MEETINGS " +
+                    "where $KEY_TIME_BEGIN between ${listOfDates[0].startWeek} and " +
                     "${listOfDates[0].endWeek} order by $KEY_TIME_BEGIN"
 
         val cursor = db.rawQuery(selectQuery, null)
@@ -144,7 +144,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
         val listOfDates = ArrayList<WeekDateSaveModel>()
 
         val db = this.readableDatabase
-        val query = "select * from ${TABLE_NAME_DATES}"
+        val query = "select * from $TABLE_NAME_DATES"
 
         val cursor = db.rawQuery(query, null)
 
@@ -181,7 +181,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
         db.update(
             TABLE_NAME_DATES,
-            values, "${KEY_ID} = ${date.id}", null
+            values, "$KEY_ID = ${date.id}", null
         )
 
     }
@@ -208,7 +208,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
         val listOfTasks = ArrayList<TaskDataModel>()
 
         val db = this.readableDatabase
-        val query = "select * from ${TABLE_NAME_TASKS} " +
+        val query = "select * from $TABLE_NAME_TASKS " +
                 "order by $KEY_PRIORITY"
 
         val cursor = db.rawQuery(query, null)

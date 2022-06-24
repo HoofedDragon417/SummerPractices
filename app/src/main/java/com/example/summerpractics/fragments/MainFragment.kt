@@ -14,10 +14,6 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = requireNotNull(_binding)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +40,17 @@ class MainFragment : Fragment() {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.test_fragment, CreateMeetingFragment.newInstance())
                 .addToBackStack(null).commit()
+
+        }
+
+        binding.testNavBar.setOnItemReselectedListener {
+
+            when(it.itemId){
+
+                R.id.meetings -> binding.pager.currentItem = 0
+                R.id.tasks -> binding.pager.currentItem = 1
+
+            }
 
         }
 
