@@ -25,7 +25,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-       create()
+        create()
 
         binding.createTaskFab.setOnClickListener {
 
@@ -43,14 +43,16 @@ class MainFragment : Fragment() {
 
         }
 
-        binding.testNavBar.setOnItemReselectedListener {
+        binding.testNavBar.setOnNavigationItemSelectedListener {
 
-            when(it.itemId){
+            when (it.itemId) {
 
                 R.id.meetings -> binding.pager.currentItem = 0
                 R.id.tasks -> binding.pager.currentItem = 1
 
             }
+
+            true
 
         }
 
@@ -63,7 +65,7 @@ class MainFragment : Fragment() {
 
     }
 
-    fun create(){
+    private fun create() {
 
         val fragments = arrayListOf(
 
