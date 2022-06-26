@@ -31,7 +31,9 @@ class MeetingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val listOfMeetings = DataBaseHelper(context).viewMeetings()
+        val dates = DataBaseHelper(context).viewDates()
+
+        val listOfMeetings = DataBaseHelper(context).viewMeetings(dates)
 
         binding.recyclerMeetingFragment.adapter =
             MeetingAdapter(requireContext(), listOfMeetings)

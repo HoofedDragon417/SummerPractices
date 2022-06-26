@@ -43,7 +43,7 @@ class MainFragment : Fragment() {
 
         }
 
-        binding.testNavBar.setOnNavigationItemSelectedListener {
+        binding.testNavBar.setOnItemSelectedListener {
 
             when (it.itemId) {
 

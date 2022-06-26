@@ -25,41 +25,28 @@ class MainActivity : AppCompatActivity() {
         val testList = DataBaseHelper(applicationContext).viewDates()
 
         val calendar = Calendar.getInstance()
-        calendar.time = Date()
-        calendar.firstDayOfWeek = Calendar.MONDAY // Set the starting day of the week
 
-        calendar.set(
-            Calendar.DAY_OF_WEEK,
-            Calendar.MONDAY
-        ) // Pass whatever day you want to get inplace of `MONDAY`
-        val startDate = calendar.time
-        startDate.hours = 0
-        startDate.minutes = 0
-        startDate.seconds = 0
+        var startDate = calendar
+        val endDate = calendar
 
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
-        val endDate = calendar.time
-        endDate.hours = 0
-        endDate.minutes = 0
-        endDate.seconds = 0
-        endDate.date += 1
+        startDate[Calendar.DAY_OF_WEEK] = Calendar.MONDAY
+        startDate = setZeros(startDate)
+        val startWeek = startDate.timeInMillis
 
-        val startWeek = startDate.time
-        val endWeek = endDate.time
+        endDate[Calendar.WEEK_OF_MONTH] += 1
+        val endWeek = endDate.timeInMillis
 
-        if (testList.size == 0) {
+        if (testList.id == 0) {
 
             val date = WeekDateSaveModel(0, startWeek, endWeek)
 
             DataBaseHelper(applicationContext).addDates(date)
 
-        }
+        } else {
 
-        if (testList.size != 0) {
+            if (startWeek != testList.beginThisWeek) {
 
-            if (startWeek != testList[0].startWeek) {
-
-                val date = WeekDateSaveModel(testList[0].id, startWeek, endWeek)
+                val date = WeekDateSaveModel(testList.id, startWeek, endWeek)
 
                 Log.i("check data update", "date update check")
 
@@ -71,6 +58,16 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.test_fragment, MainFragment.newInstance()).commit()
+
+    }
+
+    fun setZeros(date: Calendar): Calendar {
+
+        date[Calendar.HOUR_OF_DAY] = 0
+        date[Calendar.MINUTE] = 0
+        date[Calendar.SECOND] = 0
+
+        return date
 
     }
 
