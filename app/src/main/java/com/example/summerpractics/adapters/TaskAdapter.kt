@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.summerpractics.R
+import com.example.summerpractics.database.DataBaseHelper
 import com.example.summerpractics.databinding.RecyclerviewItemTaskBinding
 import com.example.summerpractics.models.TaskDataModel
 
@@ -29,6 +30,28 @@ class TaskAdapter(
 
                 0 -> binding.taskCompleted.isChecked = false
                 else -> binding.taskCompleted.isChecked = true
+
+            }
+
+            binding.taskCompleted.setOnClickListener {
+
+                when (binding.taskCompleted.isChecked) {
+
+                    true -> {
+
+                        item.completed = 1
+                        DataBaseHelper(context).updateTasks(item)
+
+                    }
+
+                    else -> {
+
+                        item.completed = 0
+                        DataBaseHelper(context).updateTasks(item)
+
+                    }
+
+                }
 
             }
 

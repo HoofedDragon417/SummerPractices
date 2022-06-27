@@ -1,7 +1,6 @@
 package com.example.summerpractics
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.summerpractics.database.DataBaseHelper
 import com.example.summerpractics.databinding.ActivityMainBinding
@@ -22,33 +21,28 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val testList = DataBaseHelper(applicationContext).viewDates()
+        val currentDates = DataBaseHelper(applicationContext).viewDates()
 
-        val calendar = Calendar.getInstance()
+        var calendar = Calendar.getInstance()
 
-        var startDate = calendar
-        val endDate = calendar
+        calendar[Calendar.DAY_OF_WEEK] = Calendar.MONDAY
+        calendar = setZeros(calendar)
+        val startPeriod = calendar.timeInMillis
 
-        startDate[Calendar.DAY_OF_WEEK] = Calendar.MONDAY
-        startDate = setZeros(startDate)
-        val startWeek = startDate.timeInMillis
+        calendar.roll(calendar[Calendar.WEEK_OF_MONTH], true)
+        val endPeriod = calendar.timeInMillis
 
-        endDate[Calendar.WEEK_OF_MONTH] += 1
-        val endWeek = endDate.timeInMillis
+        if (currentDates.id == 0) {
 
-        if (testList.id == 0) {
-
-            val date = WeekDateSaveModel(0, startWeek, endWeek)
+            val date = WeekDateSaveModel(0, startPeriod, endPeriod)
 
             DataBaseHelper(applicationContext).addDates(date)
 
         } else {
 
-            if (startWeek != testList.beginThisWeek) {
+            if (startPeriod != currentDates.periodBegin) {
 
-                val date = WeekDateSaveModel(testList.id, startWeek, endWeek)
-
-                Log.i("check data update", "date update check")
+                val date = WeekDateSaveModel(currentDates.id, startPeriod, endPeriod)
 
                 DataBaseHelper(applicationContext).updateDates(date)
 
@@ -61,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun setZeros(date: Calendar): Calendar {
+    private fun setZeros(date: Calendar): Calendar {
 
         date[Calendar.HOUR_OF_DAY] = 0
         date[Calendar.MINUTE] = 0
