@@ -6,6 +6,7 @@ import com.example.summerpractics.database.DataBaseHelper
 import com.example.summerpractics.databinding.ActivityMainBinding
 import com.example.summerpractics.fragments.MainFragment
 import com.example.summerpractics.models.WeekDateSaveModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+
         val currentDates = DataBaseHelper(applicationContext).viewDates()
 
         var calendar = Calendar.getInstance()
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         calendar = setZeros(calendar)
         val startPeriod = calendar.timeInMillis
 
-        calendar.roll(calendar[Calendar.WEEK_OF_MONTH], true)
+        calendar[Calendar.WEEK_OF_MONTH] += 1
         val endPeriod = calendar.timeInMillis
 
         if (currentDates.id == 0) {

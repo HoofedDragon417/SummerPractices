@@ -85,17 +85,17 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
     }
 
-    fun viewMeetings(listOfDates: WeekDateSaveModel): ArrayList<MeetingDataModel> {
+    fun viewMeetings(dates: WeekDateSaveModel): ArrayList<MeetingDataModel> {
 
         val listOfMeetings = ArrayList<MeetingDataModel>()
 
         val db = this.readableDatabase
-        val selectQuery =
+        val query =
             "select * from $TABLE_NAME_MEETINGS " +
-                    "where $KEY_TIME_BEGIN between ${listOfDates.periodBegin} and " +
-                    "${listOfDates.periodEnd} order by $KEY_TIME_BEGIN"
+                    "where $KEY_TIME_BEGIN between ${dates.periodBegin} and ${dates.periodEnd}" +
+                    " order by $KEY_TIME_BEGIN"
 
-        val cursor = db.rawQuery(selectQuery, null)
+        val cursor = db.rawQuery(query, null)
 
         if (cursor.moveToFirst()) {
 
