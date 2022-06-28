@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        //попытка починить гит
 
         val currentDates = DataBaseHelper(applicationContext).viewDates()
 
