@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.summerpractics.R
 import com.example.summerpractics.adapters.ViewPagerAdapter
 import com.example.summerpractics.databinding.FragmentMainBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MainFragment : Fragment() {
 
@@ -48,6 +49,7 @@ class MainFragment : Fragment() {
             when (it.itemId) {
 
                 R.id.meetings -> binding.pager.currentItem = 0
+
                 R.id.tasks -> binding.pager.currentItem = 1
 
             }
@@ -74,8 +76,16 @@ class MainFragment : Fragment() {
 
         )
 
+        val tabsTitle = arrayOf(getString(R.string.meetings), getString(R.string.tasks))
+
         val adapter = ViewPagerAdapter(fragments, requireActivity())
         binding.pager.adapter = adapter
+
+        TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
+
+            tab.text = tabsTitle[position]
+
+        }.attach()
 
     }
 
