@@ -1,4 +1,4 @@
-package com.example.summerpractics.database
+package com.example.summerpractics.storage
 
 import android.content.ContentValues
 import android.content.Context

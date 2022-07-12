@@ -2,19 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-
         android:id="@+id/meetings"
-        android:title="@string/meetings"
-        android:icon="@drawable/ic_baseline_group_24"
-
-        />
+        android:icon="@drawable/ic_baseline_group_add_24"
+        android:title="@string/create_meeting" />
 
     <item
-
         android:id="@+id/tasks"
-        android:title="@string/tasks"
-        android:icon="@drawable/ic_baseline_note_24"
+        android:icon="@drawable/ic_baseline_note_add_24"
+        android:title="@string/create_task" />
 
-        />
+    <item
+        android:id="@+id/theme"
+        android:icon="@drawable/ic_baseline_format_paint_24"
+        android:title="@string/change_theme" />
 
 </menu>

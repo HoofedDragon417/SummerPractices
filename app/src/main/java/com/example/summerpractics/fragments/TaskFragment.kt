@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.summerpractics.adapters.TaskAdapter
-import com.example.summerpractics.database.DataBaseHelper
+import com.example.summerpractics.storage.DataBaseHelper
 import com.example.summerpractics.databinding.FragmentTaskBinding
 
 class TaskFragment : Fragment() {
@@ -22,7 +22,7 @@ class TaskFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root

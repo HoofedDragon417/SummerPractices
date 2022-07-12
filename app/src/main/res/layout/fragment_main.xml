@@ -36,25 +36,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_van_menu" />
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/floating_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/test_nav_bar"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/create_task_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_icon="@drawable/ic_baseline_note_add_24" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/create_meeting_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_icon="@drawable/ic_baseline_group_add_24" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

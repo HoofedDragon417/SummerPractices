@@ -2,11 +2,11 @@ package com.example.summerpractics
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.summerpractics.database.DataBaseHelper
+import com.example.summerpractics.storage.DataBaseHelper
 import com.example.summerpractics.databinding.ActivityMainBinding
 import com.example.summerpractics.fragments.MainFragment
 import com.example.summerpractics.models.WeekDateSaveModel
-import java.text.SimpleDateFormat
+import com.example.summerpractics.storage.SharedPreference
 import java.util.*
 
 
@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        //попытка починить гит
 
         val currentDates = DataBaseHelper(applicationContext).viewDates()
 

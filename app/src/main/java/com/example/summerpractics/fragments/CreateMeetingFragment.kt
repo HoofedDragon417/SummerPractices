@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.summerpractics.database.DataBaseHelper
 import com.example.summerpractics.databinding.FragmentCreateMeetingBinding
 import com.example.summerpractics.models.MeetingDataModel
+import com.example.summerpractics.storage.DataBaseHelper
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker

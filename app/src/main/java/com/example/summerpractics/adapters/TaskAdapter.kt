@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.summerpractics.R
-import com.example.summerpractics.database.DataBaseHelper
+import com.example.summerpractics.storage.DataBaseHelper
 import com.example.summerpractics.databinding.RecyclerviewItemTaskBinding
 import com.example.summerpractics.models.TaskDataModel
 
