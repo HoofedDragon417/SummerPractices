@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.summerpractics.models.MeetingDataModel
 import com.example.summerpractics.models.TaskDataModel
-import com.example.summerpractics.models.WeekDateSaveModel
+import com.example.summerpractics.models.DatePeriodModel
 
 class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
     context, DATABASE_NAME, null, DATABASE_VERSION
@@ -20,10 +20,6 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
         private const val KEY_TITLE = "title"
         private const val KEY_NOTE = "note"
 
-        const val TABLE_NAME_DATES = "Dates"
-        private const val KEY_BEGIN_PERIOD = "periodBegin"
-        private const val KEY_END_PERIOD = "periodEnd"
-
         private const val TABLE_NAME_TASKS = "Tasks"
         private const val KEY_DURATION = "duration"
         private const val KEY_PRIORITY = "priority"
@@ -34,12 +30,6 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
         private const val KEY_TIME_END = "timeEnd"
 
     }
-
-    private val CREATE_TABLE_DATES = "create table $TABLE_NAME_DATES(" +
-            "$KEY_ID integer primary key autoincrement," +
-            "$KEY_BEGIN_PERIOD real," +
-            "$KEY_END_PERIOD real" +
-            ")"
 
     private val CREATE_TABLE_TASKS = "create table $TABLE_NAME_TASKS(" +
             "$KEY_ID integer primary key autoincrement," +
@@ -59,18 +49,15 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
             ")"
 
     override fun onCreate(db: SQLiteDatabase?) {
-
-        db?.execSQL(CREATE_TABLE_DATES)
         db?.execSQL(CREATE_TABLE_TASKS)
         db?.execSQL(CREATE_TABLE_MEETING)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-
+        //Бесполезно(пока)
     }
 
     fun addMeeting(meeting: MeetingDataModel) {
-
         val db = this.writableDatabase
 
         val values = ContentValues()
@@ -82,11 +69,9 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
         db.insert(TABLE_NAME_MEETINGS, null, values)
         db.close()
-
     }
 
-    fun viewMeetings(dates: WeekDateSaveModel): ArrayList<MeetingDataModel> {
-
+    fun viewMeetings(dates: DatePeriodModel): ArrayList<MeetingDataModel> {
         val listOfMeetings = ArrayList<MeetingDataModel>()
 
         val db = this.readableDatabase
@@ -119,11 +104,9 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
         db.close()
 
         return listOfMeetings
-
     }
 
     fun addTask(task: TaskDataModel) {
-
         val db = this.writableDatabase
 
         val values = ContentValues()
@@ -136,11 +119,9 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
         db.insert(TABLE_NAME_TASKS, null, values)
         db.close()
-
     }
 
     fun viewTasks(): ArrayList<TaskDataModel> {
-
         val listOfTasks = ArrayList<TaskDataModel>()
 
         val db = this.readableDatabase
@@ -173,11 +154,9 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
         db.close()
 
         return listOfTasks
-
     }
 
     fun updateTasks(task: TaskDataModel) {
-
         val db = this.writableDatabase
 
         val values = ContentValues()
@@ -189,64 +168,5 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
         values.put(KEY_COMPLETED, task.completed)
 
         db.update(TABLE_NAME_TASKS, values, "$KEY_ID = ${task.id}", null)
-
     }
-
-    fun addDates(dates: WeekDateSaveModel) {
-
-        val db = this.writableDatabase
-
-        val values = ContentValues()
-
-        values.put(KEY_BEGIN_PERIOD, dates.periodBegin)
-        values.put(KEY_END_PERIOD, dates.periodEnd)
-
-        db.insert(TABLE_NAME_DATES, null, values)
-        db.close()
-
-    }
-
-    fun updateDates(date: WeekDateSaveModel) {
-
-        val values = ContentValues()
-
-        values.put(KEY_BEGIN_PERIOD, date.periodBegin)
-        values.put(KEY_END_PERIOD, date.periodEnd)
-
-        val db = this.writableDatabase
-
-        db.update(TABLE_NAME_DATES, values, "$KEY_ID = ${date.id}", null)
-
-    }
-
-    fun viewDates(): WeekDateSaveModel {
-
-        val db = this.readableDatabase
-        val query = "select * from $TABLE_NAME_DATES"
-
-        val cursor = db.rawQuery(query, null)
-
-        var id = 0
-        var periodBegin: Long = 0
-        var periodEnd: Long = 0
-
-        if (cursor.moveToFirst()) {
-
-            do {
-
-                id = cursor.getInt(0)
-                periodBegin = cursor.getLong(1)
-                periodEnd = cursor.getLong(2)
-
-
-            } while (cursor.moveToNext())
-
-        }
-
-        cursor.close()
-        db.close()
-
-        return WeekDateSaveModel(id, periodBegin, periodEnd)
-    }
-
 }

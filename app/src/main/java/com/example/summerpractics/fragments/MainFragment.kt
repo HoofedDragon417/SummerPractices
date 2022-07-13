@@ -1,6 +1,7 @@
 package com.example.summerpractics.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,10 @@ import com.example.summerpractics.adapters.ViewPagerAdapter
 import com.example.summerpractics.databinding.FragmentMainBinding
 import com.example.summerpractics.storage.SharedPreference
 import com.google.android.material.tabs.TabLayoutMediator
+
+const val VIEW_PAGER_SCREEN = "pager_screen"
+const val THEME_ID = "theme_id"
+const val ITEM_ID = "item_id"
 
 class MainFragment : Fragment() {
 
@@ -28,10 +33,9 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         create()
 
-        val themeId = SharedPreference(requireContext()).getThemeId()
+        val themeId = SharedPreference(requireContext()).getInt(THEME_ID)
 
         if (themeId != 0) {
             AppCompatDelegate.setDefaultNightMode(themeId)
@@ -42,18 +46,18 @@ class MainFragment : Fragment() {
             when (it.itemId) {
 
                 R.id.meetings -> parentFragmentManager.beginTransaction()
-                    .replace(R.id.test_fragment, CreateMeetingFragment.newInstance())
+                    .replace(R.id.fragment_container_view, CreateMeetingFragment.newInstance())
                     .addToBackStack(null).commit()
 
                 R.id.tasks -> parentFragmentManager.beginTransaction()
-                    .replace(R.id.test_fragment, CreateTaskFragment.newInstance())
+                    .replace(R.id.fragment_container_view, CreateTaskFragment.newInstance())
                     .addToBackStack(null).commit()
 
                 R.id.theme -> {
                     val builder = AlertDialog.Builder(requireContext())
                     builder.setTitle(getString(R.string.change_theme))
                     val styles = arrayOf("System", "Light", "Dark")
-                    var checkedItem = SharedPreference(requireContext()).getCheckedItem()
+                    val checkedItem = SharedPreference(requireContext()).getInt(ITEM_ID)
 
                     builder.setSingleChoiceItems(styles, checkedItem) { dialog, which ->
                         when (which) {
@@ -82,8 +86,21 @@ class MainFragment : Fragment() {
 
     private fun saveTheme(theme: Int, item: Int) {
         AppCompatDelegate.setDefaultNightMode(theme)
-        SharedPreference(requireContext()).saveThemeId(theme)
-        SharedPreference(requireContext()).saveCheckedItem(item)
+        SharedPreference(requireContext()).saveInt(THEME_ID, theme)
+        SharedPreference(requireContext()).saveInt(ITEM_ID, item)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(VIEW_PAGER_SCREEN, binding.pager.currentItem)
+        Log.i("test save", "testing life cycle(onSaveInstanceState) in fragment")
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null)
+            binding.pager.currentItem = savedInstanceState.getInt(VIEW_PAGER_SCREEN)
+        Log.i("test save", "testing life cycle(onViewStateRestored) in fragment")
     }
 
     override fun onResume() {
@@ -106,14 +123,12 @@ class MainFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = tabsTitle[position]
         }.attach()
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
 
     companion object {
         fun newInstance() =

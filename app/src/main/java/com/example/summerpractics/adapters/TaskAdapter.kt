@@ -15,9 +15,7 @@ class TaskAdapter(
 
     inner class TaskViewHolder(private val binding: RecyclerviewItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(position: Int) {
-
             val item = items[position]
 
             binding.priorityTextview.text = item.priority.toString()
@@ -27,40 +25,26 @@ class TaskAdapter(
             binding.noteTextview.text = item.note
 
             when (item.completed) {
-
                 0 -> binding.taskCompleted.isChecked = false
                 else -> binding.taskCompleted.isChecked = true
-
             }
 
             binding.taskCompleted.setOnClickListener {
-
                 when (binding.taskCompleted.isChecked) {
-
                     true -> {
-
                         item.completed = 1
                         DataBaseHelper(context).updateTasks(item)
-
                     }
-
                     else -> {
-
                         item.completed = 0
                         DataBaseHelper(context).updateTasks(item)
-
                     }
-
                 }
-
             }
-
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-
         return TaskViewHolder(
             RecyclerviewItemTaskBinding.inflate(
                 LayoutInflater.from(context),
@@ -68,13 +52,10 @@ class TaskAdapter(
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-
         holder.bind(position)
-
     }
 
     override fun getItemCount(): Int {

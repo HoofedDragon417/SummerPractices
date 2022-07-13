@@ -42,7 +42,6 @@ class CreateMeetingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentCreateMeetingBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
@@ -54,7 +53,6 @@ class CreateMeetingFragment : Fragment() {
 
 
         binding.startMeetingTextview.setOnClickListener {
-
             Log.i("check date click", "Click on set date")
 
             val dateInMillis = startMeeting.time
@@ -65,7 +63,6 @@ class CreateMeetingFragment : Fragment() {
                 MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraints).build()
 
             pickerDate.addOnPositiveButtonClickListener {
-
                 startMeeting = Date(it)
                 endMeeting = Date(it)
 
@@ -78,11 +75,9 @@ class CreateMeetingFragment : Fragment() {
             }
 
             pickerDate.show(this.parentFragmentManager, "select date")
-
         }
 
         binding.meetingSetTimeBegin.setOnClickListener {
-
             Log.i("check time start click", "Click on set meeting begin")
 
             val pickerTime = MaterialTimePicker.Builder().setTimeFormat(CLOCK_24H).build()
@@ -101,11 +96,9 @@ class CreateMeetingFragment : Fragment() {
             }
 
             pickerTime.show(this.parentFragmentManager, "set time begin")
-
         }
 
         binding.meetingSetTimeEnd.setOnClickListener {
-
             Log.i("check time end click", "Click on set meeting end")
 
             val pickerTime = MaterialTimePicker.Builder().setTimeFormat(CLOCK_24H).build()
@@ -121,11 +114,9 @@ class CreateMeetingFragment : Fragment() {
             }
 
             pickerTime.show(this.parentFragmentManager, "set time begin")
-
         }
 
         binding.meetingSaveButton.setOnClickListener {
-
             Log.i("check save click", "Click on save meeting")
 
             val meetingTitle = binding.meetingTitleEdittext.text.toString()
@@ -138,7 +129,6 @@ class CreateMeetingFragment : Fragment() {
             DataBaseHelper(context).addMeeting(meetingRec)
 
             requireActivity().onBackPressed()
-
         }
 
     }

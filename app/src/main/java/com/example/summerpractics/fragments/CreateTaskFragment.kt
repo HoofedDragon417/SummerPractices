@@ -20,16 +20,10 @@ class CreateTaskFragment : Fragment() {
             CreateTaskFragment()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentCreateTaskBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
@@ -39,7 +33,6 @@ class CreateTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.taskSaveButton.setOnClickListener {
-
             val taskTitle = binding.taskTitleEdittext.text.toString()
             val taskNote = binding.taskNoteEdittext.text.toString()
             val taskDuration = binding.taskDurationEdittext.text.toString().toDouble()
@@ -51,7 +44,6 @@ class CreateTaskFragment : Fragment() {
 
             requireActivity().onBackPressed()
         }
-
     }
 
     override fun onDestroy() {

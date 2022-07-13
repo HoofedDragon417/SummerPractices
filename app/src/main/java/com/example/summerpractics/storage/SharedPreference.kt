@@ -1,29 +1,31 @@
 package com.example.summerpractics.storage
 
 import android.content.Context
+import com.example.summerpractics.models.DatePeriodModel
 
 const val PREF_NAME = "theme"
-const val THEME_ID = "theme_id"
-const val ITEM_ID = "item_id"
+const val DATE_PERIOD_START = "date_period_start"
+const val DATE_PERIOD_END = "date_period_end"
 
 class SharedPreference(ctx: Context) {
 
-    var data = ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    private var data = ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-    fun saveThemeId(themeId: Int) {
-        data.edit().putInt(THEME_ID, themeId).apply()
+    fun saveInt(key: String, value: Int) {
+        data.edit().putInt(key, value).apply()
     }
 
-    fun getThemeId(): Int {
-        return data.getInt(THEME_ID, 0)
+    fun getInt(key: String): Int {
+        return data.getInt(key, 0)
     }
 
-    fun saveCheckedItem(item: Int) {
-        data.edit().putInt(ITEM_ID, item).apply()
+    fun saveDate(date: DatePeriodModel) {
+        data.edit().putLong(DATE_PERIOD_START, date.periodBegin).apply()
+        data.edit().putLong(DATE_PERIOD_END, date.periodEnd).apply()
     }
 
-    fun getCheckedItem(): Int {
-        return data.getInt(ITEM_ID, 0)
+    fun getDate(): DatePeriodModel {
+        return DatePeriodModel(data.getLong(DATE_PERIOD_START, 0), data.getLong(DATE_PERIOD_END, 0))
     }
 
 }

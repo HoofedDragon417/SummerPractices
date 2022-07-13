@@ -15,7 +15,6 @@ class MeetingAdapter(
 
     inner class MeetingViewHolder(private val binding: RecyclerviewItemMeetingBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(position: Int) {
             val item = items[position]
 
@@ -25,31 +24,22 @@ class MeetingAdapter(
             binding.meetingNote.text = item.note
             binding.beginTime.text = sdf.format(item.beginTime)
             binding.endTime.text = sdf.format(item.endTime)
-
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeetingViewHolder {
-
         return MeetingViewHolder(
             RecyclerviewItemMeetingBinding.inflate(
                 LayoutInflater.from(context), parent, false
             )
         )
-
     }
 
     override fun getItemCount(): Int {
-
         return items.size
-
     }
 
     override fun onBindViewHolder(holder: MeetingViewHolder, position: Int) {
-
         holder.bind(position)
-
     }
-
 }

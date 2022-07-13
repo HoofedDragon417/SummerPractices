@@ -14,11 +14,6 @@ class TaskFragment : Fragment() {
     private var _binding: FragmentTaskBinding? = null
     private val binding get() = requireNotNull(_binding)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,7 +29,6 @@ class TaskFragment : Fragment() {
         val listOfTasks = DataBaseHelper(context).viewTasks()
 
         binding.recyclerTaskFragment.adapter = TaskAdapter(requireContext(), listOfTasks)
-
     }
 
     override fun onDestroy() {
