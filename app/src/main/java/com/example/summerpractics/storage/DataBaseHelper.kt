@@ -109,7 +109,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
     fun deleteMeetings(border: Long) {
         val db = this.writableDatabase
 
-        db.delete(TABLE_NAME_MEETINGS, "$KEY_TIME_BEGIN <= $border and $KEY_COMPLETED = 1", null)
+        db.delete(TABLE_NAME_MEETINGS, "$KEY_TIME_BEGIN <= $border ", null)
     }
 
     fun addTask(task: TaskDataModel) {

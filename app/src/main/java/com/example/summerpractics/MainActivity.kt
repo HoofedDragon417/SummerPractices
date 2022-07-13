@@ -30,17 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         var calendar = Calendar.getInstance()
 
-        if ((calendar[Calendar.MONTH] == 6 || calendar[Calendar.MONTH] == 12) && !autoDeleteCheck) {
-            var temporaryValue = calendar
-            temporaryValue[Calendar.DAY_OF_MONTH] = 1
-            temporaryValue = setZeros(temporaryValue)
-            DataBaseHelper(applicationContext).deleteMeetings(temporaryValue.timeInMillis)
-            DataBaseHelper(applicationContext).deleteTasks(temporaryValue.timeInMillis)
-
-            SharedPreference(applicationContext).saveBoolean(AUTO_DELETE_CHECK, true)
-        } else
-            SharedPreference(applicationContext).saveBoolean(AUTO_DELETE_CHECK, false)
-
         calendar[Calendar.DAY_OF_WEEK] = Calendar.MONDAY
         calendar = setZeros(calendar)
         val startPeriod = calendar.timeInMillis
@@ -55,6 +44,17 @@ class MainActivity : AppCompatActivity() {
                 SharedPreference(applicationContext).saveDate(
                     DatePeriodModel(startPeriod, endPeriod)
                 )
+
+        if ((calendar[Calendar.MONTH] == 6 || calendar[Calendar.MONTH] == 12) && !autoDeleteCheck) {
+            var temporaryValue = calendar
+            temporaryValue[Calendar.DAY_OF_MONTH] = 1
+            temporaryValue = setZeros(temporaryValue)
+            DataBaseHelper(applicationContext).deleteMeetings(temporaryValue.timeInMillis)
+            DataBaseHelper(applicationContext).deleteTasks(temporaryValue.timeInMillis)
+
+            SharedPreference(applicationContext).saveBoolean(AUTO_DELETE_CHECK, true)
+        } else
+            SharedPreference(applicationContext).saveBoolean(AUTO_DELETE_CHECK, false)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view, MainFragment.newInstance()).commit()
