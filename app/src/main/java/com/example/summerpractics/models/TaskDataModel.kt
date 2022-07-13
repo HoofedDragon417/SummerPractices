@@ -6,5 +6,6 @@ class TaskDataModel(
     var note: String,
     val duration: Double,
     val priority: Int,
-    var completed: Int
+    var completed: Int,
+    val timeOfCreation: Long
 )

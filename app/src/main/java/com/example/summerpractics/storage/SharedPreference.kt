@@ -28,4 +28,11 @@ class SharedPreference(ctx: Context) {
         return DatePeriodModel(data.getLong(DATE_PERIOD_START, 0), data.getLong(DATE_PERIOD_END, 0))
     }
 
+    fun saveBoolean(key: String, value: Boolean) {
+        data.edit().putBoolean(key, value).apply()
+    }
+
+    fun getBoolean(key: String): Boolean {
+        return data.getBoolean(key,false)
+    }
 }

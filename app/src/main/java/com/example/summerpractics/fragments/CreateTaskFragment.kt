@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.summerpractics.storage.DataBaseHelper
 import com.example.summerpractics.databinding.FragmentCreateTaskBinding
 import com.example.summerpractics.models.TaskDataModel
+import com.example.summerpractics.storage.DataBaseHelper
+import java.util.*
 
 class CreateTaskFragment : Fragment() {
 
@@ -37,8 +38,10 @@ class CreateTaskFragment : Fragment() {
             val taskNote = binding.taskNoteEdittext.text.toString()
             val taskDuration = binding.taskDurationEdittext.text.toString().toDouble()
             val taskPriority = binding.taskPriorityEdittext.text.toString().toInt()
+            val timeOfCreation = Calendar.getInstance().timeInMillis
 
-            val taskRec = TaskDataModel(0, taskTitle, taskNote, taskDuration, taskPriority, 0)
+            val taskRec =
+                TaskDataModel(0, taskTitle, taskNote, taskDuration, taskPriority, 0, timeOfCreation)
 
             DataBaseHelper(context).addTask(taskRec)
 

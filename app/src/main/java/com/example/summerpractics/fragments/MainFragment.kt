@@ -14,7 +14,6 @@ import com.example.summerpractics.databinding.FragmentMainBinding
 import com.example.summerpractics.storage.SharedPreference
 import com.google.android.material.tabs.TabLayoutMediator
 
-const val VIEW_PAGER_SCREEN = "pager_screen"
 const val THEME_ID = "theme_id"
 const val ITEM_ID = "item_id"
 
@@ -88,19 +87,6 @@ class MainFragment : Fragment() {
         AppCompatDelegate.setDefaultNightMode(theme)
         SharedPreference(requireContext()).saveInt(THEME_ID, theme)
         SharedPreference(requireContext()).saveInt(ITEM_ID, item)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(VIEW_PAGER_SCREEN, binding.pager.currentItem)
-        Log.i("test save", "testing life cycle(onSaveInstanceState) in fragment")
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState != null)
-            binding.pager.currentItem = savedInstanceState.getInt(VIEW_PAGER_SCREEN)
-        Log.i("test save", "testing life cycle(onViewStateRestored) in fragment")
     }
 
     override fun onResume() {
