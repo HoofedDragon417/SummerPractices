@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.summerpractics.R
 import com.example.summerpractics.databinding.FragmentCreateMeetingBinding
+import com.example.summerpractics.models.DatePeriodModel
 import com.example.summerpractics.models.MeetingDataModel
 import com.example.summerpractics.storage.DataBaseHelper
 import com.google.android.material.datepicker.CalendarConstraints
@@ -23,11 +25,8 @@ class CreateMeetingFragment : Fragment() {
 
     companion object {
 
-        private val sdf = SimpleDateFormat("dd/MM/yyyy")
-        private val stf = SimpleDateFormat("HH:mm")
-
-        var startMeeting = Date()
-        var endMeeting = Date()
+        var temporaryStart = Date()
+        var temporaryEnd = Date()
 
         fun newInstance() =
             CreateMeetingFragment()
@@ -50,12 +49,16 @@ class CreateMeetingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val datePattern = requireContext().getString(R.string.date_format)
+        val timePattern = requireContext().getString(R.string.time_format)
 
+        val sdf = SimpleDateFormat(datePattern, Locale.getDefault())
+        val stf = SimpleDateFormat(timePattern, Locale.getDefault())
 
         binding.startMeetingTextview.setOnClickListener {
             Log.i("check date click", "Click on set date")
 
-            val dateInMillis = startMeeting.time
+            val dateInMillis = Calendar.getInstance().timeInMillis
 
             val constraints = CalendarConstraints.Builder().setOpenAt(dateInMillis).build()
 
@@ -63,14 +66,15 @@ class CreateMeetingFragment : Fragment() {
                 MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraints).build()
 
             pickerDate.addOnPositiveButtonClickListener {
-                startMeeting = Date(it)
-                endMeeting = Date(it)
 
-                binding.meetingSetDateTextview1.text = sdf.format(startMeeting)
-                binding.meetingSetDateTextview2.text = sdf.format(endMeeting)
+                temporaryStart = Date(it)
+                temporaryEnd = Date(it)
 
-                binding.meetingSetTimeBegin.text = stf.format(startMeeting)
-                binding.meetingSetTimeEnd.text = stf.format(endMeeting)
+                binding.meetingSetDateTextview1.text = sdf.format(temporaryStart)
+                binding.meetingSetDateTextview2.text = sdf.format(temporaryEnd)
+
+                binding.meetingSetTimeBegin.text = stf.format(temporaryStart)
+                binding.meetingSetTimeEnd.text = stf.format(temporaryEnd)
 
             }
 
@@ -84,15 +88,17 @@ class CreateMeetingFragment : Fragment() {
 
             pickerTime.addOnPositiveButtonClickListener {
 
-                startMeeting.hours = pickerTime.hour
-                endMeeting.hours = pickerTime.hour + 1
+                temporaryStart.hours = pickerTime.hour
+                temporaryStart.minutes = pickerTime.minute
 
-                startMeeting.minutes = pickerTime.minute
-                endMeeting.minutes = pickerTime.minute
+                temporaryEnd.hours = pickerTime.hour + 1
+                temporaryEnd.minutes = pickerTime.minute
 
-                binding.meetingSetTimeBegin.text = stf.format(startMeeting)
-                binding.meetingSetTimeEnd.text = stf.format(endMeeting)
+                if (temporaryEnd.hours == 0)
+                    binding.meetingSetDateTextview2.text = sdf.format(temporaryEnd)
 
+                binding.meetingSetTimeBegin.text = stf.format(temporaryStart)
+                binding.meetingSetTimeEnd.text = stf.format(temporaryEnd)
             }
 
             pickerTime.show(this.parentFragmentManager, "set time begin")
@@ -105,12 +111,10 @@ class CreateMeetingFragment : Fragment() {
 
             pickerTime.addOnPositiveButtonClickListener {
 
-                endMeeting.hours = pickerTime.hour
+                temporaryEnd.hours = pickerTime.hour
+                temporaryEnd.minutes = pickerTime.minute
 
-                endMeeting.minutes = pickerTime.minute
-
-                binding.meetingSetTimeEnd.text = stf.format(endMeeting)
-
+                binding.meetingSetTimeEnd.text = stf.format(temporaryEnd)
             }
 
             pickerTime.show(this.parentFragmentManager, "set time begin")
@@ -121,16 +125,23 @@ class CreateMeetingFragment : Fragment() {
 
             val meetingTitle = binding.meetingTitleEdittext.text.toString()
             val meetingNote = binding.meetingNoteEdittext.text.toString()
-            val start = startMeeting.time
-            val end = endMeeting.time
 
-            val meetingRec = MeetingDataModel(0, meetingTitle, meetingNote, start, end)
+            val meetingRec = MeetingDataModel(
+                0, meetingTitle, meetingNote, DatePeriodModel(
+                    temporaryStart.time, temporaryEnd.time
+                )
+            )
 
             DataBaseHelper(context).addMeeting(meetingRec)
 
             requireActivity().onBackPressed()
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        onDestroy()
     }
 
     override fun onDestroy() {

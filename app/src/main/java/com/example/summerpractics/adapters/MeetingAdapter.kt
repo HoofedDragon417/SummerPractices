@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.summerpractics.R
 import com.example.summerpractics.databinding.RecyclerviewItemMeetingBinding
 import com.example.summerpractics.models.MeetingDataModel
 import java.text.SimpleDateFormat
+import java.util.*
 
 class MeetingAdapter(
     private val context: Context,
@@ -18,12 +20,13 @@ class MeetingAdapter(
         fun bind(position: Int) {
             val item = items[position]
 
-            val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
+            val pattern = context.getString(R.string.meeting_pattern)
+            val sdf = SimpleDateFormat(pattern, Locale.getDefault())
 
             binding.meetingTitle.text = item.title
             binding.meetingNote.text = item.note
-            binding.beginTime.text = sdf.format(item.beginTime)
-            binding.endTime.text = sdf.format(item.endTime)
+            binding.beginTime.text = sdf.format(item.duration.periodBegin)
+            binding.endTime.text = sdf.format(item.duration.periodEnd)
         }
     }
 

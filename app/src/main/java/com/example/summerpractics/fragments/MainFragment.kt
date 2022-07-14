@@ -1,7 +1,6 @@
 package com.example.summerpractics.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import com.example.summerpractics.storage.SharedPreference
 import com.google.android.material.tabs.TabLayoutMediator
 
 const val THEME_ID = "theme_id"
-const val ITEM_ID = "item_id"
+private const val ITEM_THEME_ID = "item_id"
 
 class MainFragment : Fragment() {
 
@@ -56,7 +55,7 @@ class MainFragment : Fragment() {
                     val builder = AlertDialog.Builder(requireContext())
                     builder.setTitle(getString(R.string.change_theme))
                     val styles = arrayOf("System", "Light", "Dark")
-                    val checkedItem = SharedPreference(requireContext()).getInt(ITEM_ID)
+                    val checkedItem = SharedPreference(requireContext()).getInt(ITEM_THEME_ID)
 
                     builder.setSingleChoiceItems(styles, checkedItem) { dialog, which ->
                         when (which) {
@@ -86,7 +85,7 @@ class MainFragment : Fragment() {
     private fun saveTheme(theme: Int, item: Int) {
         AppCompatDelegate.setDefaultNightMode(theme)
         SharedPreference(requireContext()).saveInt(THEME_ID, theme)
-        SharedPreference(requireContext()).saveInt(ITEM_ID, item)
+        SharedPreference(requireContext()).saveInt(ITEM_THEME_ID, item)
     }
 
     override fun onResume() {

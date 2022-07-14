@@ -10,6 +10,8 @@
 
     <string name="date_format">dd/MM/yyyy</string>
     <string name="time_format">HH:mm</string>
+    <string name="toolbar_date_format">EEE, MMM d</string>
+    <string name="meeting_pattern">dd/MM/yyyy HH:mm</string>
 
     <string name="create_task">Create task</string>
     <string name="task_title_hint">Task title</string>
@@ -17,6 +19,11 @@
     <string name="task_priority">Task priority</string>
     <string name="task_duration">Task duration</string>
     <string name="completed">Completed?</string>
+
+    <string name="choose_tasks">Choose parameter</string>
+    <string name="task_unfinished">Unfinished tasks: %d</string>
+    <string name="task_finished">Finished tasks: %d</string>
+    <string name="task_all">All tasks: %d</string>
 
     <string name="create_meeting">Create meeting</string>
     <string name="meeting_title_hint">Meeting title</string>

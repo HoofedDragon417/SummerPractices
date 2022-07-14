@@ -23,27 +23,20 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val dateCheckFirstStart = SharedPreference(applicationContext).getDate()
         val autoDeleteCheck = SharedPreference(applicationContext).getBoolean(AUTO_DELETE_CHECK)
 
         val currentDates = SharedPreference(applicationContext).getDate()
 
         var calendar = Calendar.getInstance()
 
-        calendar[Calendar.DAY_OF_WEEK] = Calendar.MONDAY
         calendar = setZeros(calendar)
         val startPeriod = calendar.timeInMillis
 
-        calendar[Calendar.WEEK_OF_MONTH] += 1
+        calendar[Calendar.DAY_OF_WEEK] += 1
         val endPeriod = calendar.timeInMillis
 
-        if (currentDates.periodBegin == dateCheckFirstStart.periodBegin)
+        if (startPeriod != currentDates.periodBegin)
             SharedPreference(applicationContext).saveDate(DatePeriodModel(startPeriod, endPeriod))
-        else
-            if (startPeriod != currentDates.periodBegin)
-                SharedPreference(applicationContext).saveDate(
-                    DatePeriodModel(startPeriod, endPeriod)
-                )
 
         if ((calendar[Calendar.MONTH] == 6 || calendar[Calendar.MONTH] == 12) && !autoDeleteCheck) {
             var temporaryValue = calendar
@@ -58,17 +51,14 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view, MainFragment.newInstance()).commit()
-
     }
 
     private fun setZeros(date: Calendar): Calendar {
-
         date[Calendar.HOUR_OF_DAY] = 0
         date[Calendar.MINUTE] = 0
         date[Calendar.SECOND] = 0
 
         return date
-
     }
 
 }

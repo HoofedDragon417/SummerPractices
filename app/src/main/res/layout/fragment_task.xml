@@ -7,6 +7,27 @@
     android:orientation="vertical"
     tools:context=".fragments.MeetingFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/task_textview_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:hint="@string/task_unfinished" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/task_imageview_toolbar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_baseline_note_black_24" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_task_fragment"
         android:layout_width="match_parent"

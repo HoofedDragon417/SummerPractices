@@ -64,8 +64,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
         values.put(KEY_TITLE, meeting.title)
         values.put(KEY_NOTE, meeting.note)
-        values.put(KEY_TIME_BEGIN, meeting.beginTime)
-        values.put(KEY_TIME_END, meeting.endTime)
+        values.put(KEY_TIME_BEGIN, meeting.duration.periodBegin)
+        values.put(KEY_TIME_END, meeting.duration.periodEnd)
 
         db.insert(TABLE_NAME_MEETINGS, null, values)
         db.close()
@@ -92,7 +92,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
                 val timeBegin = cursor.getLong(3)
                 val timeEnd = cursor.getLong(4)
 
-                val meeting = MeetingDataModel(id, title, note, timeBegin, timeEnd)
+                val meeting = MeetingDataModel(id, title, note, DatePeriodModel(timeBegin, timeEnd))
 
                 listOfMeetings.add(meeting)
 
@@ -127,12 +127,48 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
         db.close()
     }
 
-    fun viewTasks(): ArrayList<TaskDataModel> {
+    fun viewTasksWithParameter(parameter: Int): ArrayList<TaskDataModel> {
         val listOfTasks = ArrayList<TaskDataModel>()
 
         val db = this.readableDatabase
         val query = "select * from $TABLE_NAME_TASKS " +
-                "where $KEY_COMPLETED like 0 " +
+                "where $KEY_COMPLETED like $parameter " +
+                "order by $KEY_PRIORITY"
+
+        val cursor = db.rawQuery(query, null)
+
+        if (cursor.moveToFirst()) {
+
+            do {
+
+                val id = cursor.getInt(0)
+                val title = cursor.getString(1)
+                val note = cursor.getString(2)
+                val duration = cursor.getDouble(3)
+                val priority = cursor.getInt(4)
+                val completed = cursor.getInt(5)
+                val timeOfCreation = cursor.getLong(6)
+
+                val task =
+                    TaskDataModel(id, title, note, duration, priority, completed, timeOfCreation)
+
+                listOfTasks.add(task)
+
+            } while (cursor.moveToNext())
+
+        }
+
+        cursor.close()
+        db.close()
+
+        return listOfTasks
+    }
+
+    fun viewAllTasks(): ArrayList<TaskDataModel> {
+        val listOfTasks = ArrayList<TaskDataModel>()
+
+        val db = this.readableDatabase
+        val query = "select * from $TABLE_NAME_TASKS " +
                 "order by $KEY_PRIORITY"
 
         val cursor = db.rawQuery(query, null)
@@ -180,6 +216,6 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
     fun deleteTasks(border: Long) {
         val db = this.writableDatabase
-        db.delete(TABLE_NAME_TASKS, "$KEY_FOR_DELETE < $border", null)
+        db.delete(TABLE_NAME_TASKS, "$KEY_FOR_DELETE <= $border and $KEY_COMPLETED like 1", null)
     }
 }
