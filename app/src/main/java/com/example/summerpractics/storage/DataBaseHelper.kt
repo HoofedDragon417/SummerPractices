@@ -64,8 +64,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
         values.put(KEY_TITLE, meeting.title)
         values.put(KEY_NOTE, meeting.note)
-        values.put(KEY_TIME_BEGIN, meeting.beginTime)
-        values.put(KEY_TIME_END, meeting.endTime)
+        values.put(KEY_TIME_BEGIN, meeting.duration.periodBegin)
+        values.put(KEY_TIME_END, meeting.duration.periodEnd)
 
         db.insert(TABLE_NAME_MEETINGS, null, values)
         db.close()
@@ -92,7 +92,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
                 val timeBegin = cursor.getLong(3)
                 val timeEnd = cursor.getLong(4)
 
-                val meeting = MeetingDataModel(id, title, note, timeBegin, timeEnd)
+                val meeting = MeetingDataModel(id, title, note, DatePeriodModel(timeBegin, timeEnd))
 
                 listOfMeetings.add(meeting)
 
@@ -180,6 +180,6 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(
 
     fun deleteTasks(border: Long) {
         val db = this.writableDatabase
-        db.delete(TABLE_NAME_TASKS, "$KEY_FOR_DELETE < $border", null)
+        db.delete(TABLE_NAME_TASKS, "$KEY_FOR_DELETE <= $border and $KEY_COMPLETED = 1", null)
     }
 }

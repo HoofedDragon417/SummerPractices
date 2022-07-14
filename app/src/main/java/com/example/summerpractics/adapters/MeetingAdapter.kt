@@ -22,8 +22,8 @@ class MeetingAdapter(
 
             binding.meetingTitle.text = item.title
             binding.meetingNote.text = item.note
-            binding.beginTime.text = sdf.format(item.beginTime)
-            binding.endTime.text = sdf.format(item.endTime)
+            binding.beginTime.text = sdf.format(item.duration.periodBegin)
+            binding.endTime.text = sdf.format(item.duration.periodEnd)
         }
     }
 

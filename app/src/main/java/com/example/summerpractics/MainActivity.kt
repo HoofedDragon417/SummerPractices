@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     DatePeriodModel(startPeriod, endPeriod)
                 )
 
-        if ((calendar[Calendar.MONTH] == 6 || calendar[Calendar.MONTH] == 12) && !autoDeleteCheck) {
+        if ((calendar[Calendar.MONTH] == 5 || calendar[Calendar.MONTH] == 12) && !autoDeleteCheck) {
             var temporaryValue = calendar
             temporaryValue[Calendar.DAY_OF_MONTH] = 1
             temporaryValue = setZeros(temporaryValue)
