@@ -82,6 +82,13 @@ class TaskFragment : Fragment() {
     private fun showListOfTasksWithParam(param: Int, id: Int) {
         val listOfTasks = DataBaseHelper(context).viewTasksWithParameter(param)
 
+        when (param) {
+            0 -> binding.taskTextviewToolbar.text =
+                getString(R.string.task_unfinished, listOfTasks.size)
+            1 -> binding.taskTextviewToolbar.text =
+                getString(R.string.task_finished, listOfTasks.size)
+        }
+
         SharedPreference(requireContext()).saveInt(PARAM, param)
         SharedPreference(requireContext()).saveInt(ITEM_PARAM_ID, id)
 
@@ -90,6 +97,10 @@ class TaskFragment : Fragment() {
 
     private fun showAllTasks(id: Int) {
         val listOfTasks = DataBaseHelper(context).viewAllTasks()
+
+        binding.taskTextviewToolbar.text =
+            getString(R.string.task_all, listOfTasks.size)
+
         binding.recyclerTaskFragment.adapter = TaskAdapter(requireContext(), listOfTasks)
         SharedPreference(requireContext()).saveInt(ITEM_PARAM_ID, id)
     }
